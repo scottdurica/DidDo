@@ -1,4 +1,4 @@
-package com.emroxriprap.diddo.database;
+package com.emroxriprap.diddo.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -11,15 +11,14 @@ import android.net.Uri;
  */
 public class DidDoProvider extends ContentProvider {
 
-    private static final String PROVIDER_NAME = "com.emroxriprap.diddo.data";
-    private static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/data");
-    private static final int LOGS = 1;
-    private static final int LOG_ID = 2;
+
+    private static final int LOGS = 100;
+    private static final int LOG_ID = 102;
     private static final UriMatcher uriMatcher = getUriMatcher();
     private static UriMatcher getUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "logs",LOGS);
-        uriMatcher.addURI(PROVIDER_NAME, "logs/#", LOG_ID);
+        uriMatcher.addURI(DidDoContract.CONTENT_AUTHORITY, "logs",LOGS);
+        uriMatcher.addURI(DidDoContract.CONTENT_AUTHORITY, "logs/#", LOG_ID);
         return uriMatcher;
     }
     @Override
@@ -36,13 +35,14 @@ public class DidDoProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)){
             case LOGS:
-                return "vnd.android.cursor.dir/vnd.com.emroxriprap.diddo.data.logs";
+                return DidDoContract.DidDoEntry.CONTENT_TYPE;
 
             case LOG_ID:
-                return "vnd.android.cursor.item/vnd.com.emroxriprap.diddo.data.logs";
-
+                return DidDoContract.DidDoEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        return "";
+
     }
 
     @Override
