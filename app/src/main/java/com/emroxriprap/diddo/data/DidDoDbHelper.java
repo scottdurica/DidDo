@@ -17,11 +17,11 @@ public class DidDoDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE = "CREATE TABLE " + DidDoContract.DidDoEntry.TABLE_NAME +
             " (" +
-            DidDoContract.DidDoEntry._ID + " INTEGER PRIMARY KEY," +
-            DidDoContract.DidDoEntry.COLUMN_LOG_NAME + " TEXT," +
-            DidDoContract.DidDoEntry.COLUMN_DESCRIPTION + " TEXT" +
-            DidDoContract.DidDoEntry.COLUMN_DATE + " INTEGER," +
-            DidDoContract.DidDoEntry.COLUMN_DATE_STRING + " TEXT" +
+            DidDoContract.DidDoEntry._ID + " INTEGER PRIMARY KEY, " +
+            DidDoContract.DidDoEntry.COLUMN_LOG_NAME + " TEXT, " +
+            DidDoContract.DidDoEntry.COLUMN_DESCRIPTION + " TEXT, " +
+            DidDoContract.DidDoEntry.COLUMN_DATE + " INTEGER, " +
+            DidDoContract.DidDoEntry.COLUMN_DATE_STRING + " TEXT, " +
             DidDoContract.DidDoEntry.COLUMN_LOG_TYPE + " INTEGER"
             +")";
 

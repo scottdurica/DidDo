@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Log Name"
+            android:id="@+id/tv_log_list_item_name"
+            android:layout_weight=".6"
+            android:layout_margin="@dimen/ten" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Date Here"
+            android:id="@+id/tv_log_list_item_date_string"
+            android:layout_weight=".3"
+            android:gravity="right"
+            android:layout_margin="@dimen/ten" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Description of log here"
+        android:id="@+id/tv_log_list_item_description"
+        android:layout_marginLeft="@dimen/ten" />
+
+</LinearLayout>

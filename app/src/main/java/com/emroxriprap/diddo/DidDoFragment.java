@@ -28,7 +28,7 @@ public class DidDoFragment extends Fragment {
         doIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("do it", " clidked");
+                Log.d("do it", " clicked");
             }
         });
         didIt.setOnClickListener(new View.OnClickListener() {

@@ -1,0 +1,33 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.emroxriprap.diddo.LogsListFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@android:id/list"
+        android:layout_gravity="left|top"
+        android:layout_margin="@dimen/ten" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="fill_parent"
+        android:layout_height="123dp"
+        android:layout_gravity="right|bottom"
+        android:id="@+id/coord_layout">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            app:elevation="4dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</FrameLayout>
