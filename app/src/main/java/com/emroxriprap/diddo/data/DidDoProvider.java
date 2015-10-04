@@ -14,13 +14,19 @@ import android.widget.Toast;
 public class DidDoProvider extends ContentProvider {
 
     private DidDoDbHelper mOpenHelper;
+
     private static final int LOGS = 100;
-    private static final int LOG_ID = 102;
+    private static final int LOG_ID = 101;
+    private static final int WHATS = 110;
+    private static final int WHAT_ID = 111;
+
     private static final UriMatcher sUriMatcher = getsUriMatcher();
     private static UriMatcher getsUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(DidDoContract.CONTENT_AUTHORITY, DidDoContract.PATH_LOGS,LOGS);
         uriMatcher.addURI(DidDoContract.CONTENT_AUTHORITY, DidDoContract.PATH_LOGS + "/#", LOG_ID);
+        uriMatcher.addURI(DidDoContract.CONTENT_AUTHORITY, DidDoContract.PATH_WHATS,WHATS);
+        uriMatcher.addURI(DidDoContract.CONTENT_AUTHORITY, DidDoContract.PATH_WHATS + "/#", WHAT_ID);
         return uriMatcher;
     }
     @Override
@@ -36,7 +42,7 @@ public class DidDoProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)){
             case LOGS: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
-                        DidDoContract.DidDoEntry.TABLE_NAME,
+                        DidDoContract.Logs.LOGS_TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -47,7 +53,22 @@ public class DidDoProvider extends ContentProvider {
                 break;
             }
             case LOG_ID: {
-               retCursor = getLog(uri, projection, sortOrder, LOG_ID);
+               retCursor = getSingleItem(uri, projection, sortOrder, LOG_ID);
+            }
+            case WHATS: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        DidDoContract.Whats.WHATS_TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            }
+            case WHAT_ID: {
+                retCursor = getSingleItem(uri, projection,sortOrder,WHAT_ID);
             }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -55,12 +76,12 @@ public class DidDoProvider extends ContentProvider {
         retCursor.setNotificationUri(getContext().getContentResolver(),uri);
         return retCursor;
     }
-private Cursor getLog(Uri uri, String[]projection, String sortOrder, int requester){
+private Cursor getSingleItem(Uri uri, String[] projection, String sortOrder, int requester){
     switch (requester){
         case LOG_ID: {
-            String id = DidDoContract.DidDoEntry.getEntryIdFromUri(uri);
+            String id = DidDoContract.Logs.getEntryIdFromUri(uri);
             return mOpenHelper.getReadableDatabase().query(
-                    DidDoContract.DidDoEntry.TABLE_NAME,
+                    DidDoContract.Logs.LOGS_TABLE_NAME,
                     projection,
                     "WHERE id = ?",
                     new String[]{id},
@@ -69,6 +90,19 @@ private Cursor getLog(Uri uri, String[]projection, String sortOrder, int request
                     sortOrder
             );
         }
+        case WHAT_ID: {
+            String id = DidDoContract.Whats.getWhatIdFromUri(uri);
+            return mOpenHelper.getReadableDatabase().query(
+                    DidDoContract.Whats.WHATS_TABLE_NAME,
+                    projection,
+                    "WHERE id = ?",
+                    new String[]{id},
+                    null,
+                    null,
+                    sortOrder
+            );
+        }
+
         default:
             throw new UnsupportedOperationException("Couldn't retreive data from " + uri);
     }
@@ -77,10 +111,13 @@ private Cursor getLog(Uri uri, String[]projection, String sortOrder, int request
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)){
             case LOGS:
-                return DidDoContract.DidDoEntry.CONTENT_TYPE;
-
+                return DidDoContract.Logs.CONTENT_TYPE;
             case LOG_ID:
-                return DidDoContract.DidDoEntry.CONTENT_ITEM_TYPE;
+                return DidDoContract.Logs.CONTENT_ITEM_TYPE;
+            case WHATS:
+                return DidDoContract.Logs.CONTENT_TYPE;
+            case WHAT_ID:
+                return DidDoContract.Logs.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -94,10 +131,21 @@ private Cursor getLog(Uri uri, String[]projection, String sortOrder, int request
         Uri returnUri = null;
         switch (match){
             case LOGS: {
-                long _id = db.insert(DidDoContract.DidDoEntry.TABLE_NAME,null,values);
+                long _id = db.insert(DidDoContract.Logs.LOGS_TABLE_NAME,null,values);
                 if (_id > 0){
-                    returnUri = DidDoContract.DidDoEntry.buildEntriesUri(_id);
+                    returnUri = DidDoContract.Logs.buildEntriesUri(_id);
                     Toast.makeText(getContext(), "Inserted into Entries DB", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            case WHATS: {
+                long _id = db.insert(DidDoContract.Whats.WHATS_TABLE_NAME,null,values);
+                if (_id > 0){
+                    returnUri = DidDoContract.Whats.buildWhatsUri(_id);
+                    Toast.makeText(getContext(), "Inserted into Whats DB", Toast.LENGTH_SHORT).show();
 
                 }
                 else

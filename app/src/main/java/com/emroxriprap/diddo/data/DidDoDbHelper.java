@@ -15,16 +15,20 @@ public class DidDoDbHelper extends SQLiteOpenHelper {
     private static String COL_TASK_NAME = "task_name";
     private static String COL_DATE = "date";
 
-    private static final String SQL_CREATE_TABLE = "CREATE TABLE " + DidDoContract.DidDoEntry.TABLE_NAME +
+    private static final String CREATE_LOGS_TABLE = "CREATE TABLE " + DidDoContract.Logs.LOGS_TABLE_NAME +
             " (" +
-            DidDoContract.DidDoEntry._ID + " INTEGER PRIMARY KEY, " +
-            DidDoContract.DidDoEntry.COLUMN_LOG_NAME + " TEXT, " +
-            DidDoContract.DidDoEntry.COLUMN_DESCRIPTION + " TEXT, " +
-            DidDoContract.DidDoEntry.COLUMN_DATE + " INTEGER, " +
-            DidDoContract.DidDoEntry.COLUMN_DATE_STRING + " TEXT, " +
-            DidDoContract.DidDoEntry.COLUMN_LOG_TYPE + " INTEGER"
+            DidDoContract.Logs._ID + " INTEGER PRIMARY KEY, " +
+            DidDoContract.Logs.COLUMN_LOG_NAME + " TEXT, " +
+            DidDoContract.Logs.COLUMN_DESCRIPTION + " TEXT, " +
+            DidDoContract.Logs.COLUMN_DATE + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_DATE_STRING + " TEXT, " +
+            DidDoContract.Logs.COLUMN_LOG_TYPE + " INTEGER"
             +")";
-
+    private static final String CREATE_WHATS_TABLE = "CREATE TABLE " + DidDoContract.Whats.WHATS_TABLE_NAME +
+            " (" +
+            DidDoContract.Whats._ID + " INTEGER PRIMARY KEY, " +
+            DidDoContract.Whats.COLUMN_WHAT_NAME + " TEXT"
+            +")";
 
     public DidDoDbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -32,11 +36,14 @@ public class DidDoDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_TABLE);
+
+        db.execSQL(CREATE_LOGS_TABLE);
+        db.execSQL(CREATE_WHATS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DidDoContract.DidDoEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DidDoContract.Logs.LOGS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DidDoContract.Whats.WHATS_TABLE_NAME);
     }
 }
