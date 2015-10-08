@@ -7,6 +7,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String ARGS_WHAT = "what";
+    public static final String ARGS_WITH = "with";
+    public static final String ARGS_DATE_STRING = "date_string";
+    public static final String ARGS_DATE_INT = "date_int";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +24,22 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() == 1){
+//            getFragmentManager().popBackStack();
+//            setTitle("Klok");
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new LogsListFragment())
+                    .commit();
+        }
+        else if(getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
+        else{
+            getFragmentManager().popBackStack();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

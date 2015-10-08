@@ -3,6 +3,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="what">What...</string>
+    <string name="with">With...</string>
+    <string name="on">On...</string>
+    <string name="at">At...</string>
+    <string name="cb_all_day_event">All Day</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

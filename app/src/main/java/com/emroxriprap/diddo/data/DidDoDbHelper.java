@@ -29,6 +29,11 @@ public class DidDoDbHelper extends SQLiteOpenHelper {
             DidDoContract.Whats._ID + " INTEGER PRIMARY KEY, " +
             DidDoContract.Whats.COLUMN_WHAT_NAME + " TEXT"
             +")";
+    private static final String CREATE_WITHS_TABLE = "CREATE TABLE " + DidDoContract.Withs.WITHS_TABLE_NAME +
+            " (" +
+            DidDoContract.Withs._ID + " INTEGER PRIMARY KEY, " +
+            DidDoContract.Withs.COLUMN_WITH_NAME + " TEXT"
+            +")";
 
     public DidDoDbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -39,11 +44,13 @@ public class DidDoDbHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_LOGS_TABLE);
         db.execSQL(CREATE_WHATS_TABLE);
+        db.execSQL(CREATE_WITHS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DidDoContract.Logs.LOGS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DidDoContract.Whats.WHATS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DidDoContract.Withs.WITHS_TABLE_NAME);
     }
 }

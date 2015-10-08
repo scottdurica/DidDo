@@ -13,6 +13,7 @@ public class DidDoContract {
 
     public static final String PATH_LOGS = "logs";
     public static final String PATH_WHATS = "whats";
+    public static final String PATH_WITHS = "withs";
 
     public static final class Logs implements BaseColumns{
 
@@ -63,4 +64,28 @@ public class DidDoContract {
         }
 
     }
+
+    public static final class Withs implements BaseColumns {
+
+        public static final String WITHS_TABLE_NAME = "withs";
+
+        public static final String COLUMN_WITH_NAME = "name";
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_WITHS).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WITHS;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WITHS;
+
+        public static Uri buildWithsUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+        public static String getWithIdFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+    }
+
 }

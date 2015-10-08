@@ -8,6 +8,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/tv_what_list_name"
+        android:id="@+id/tv_single_item_name"
         android:layout_margin="@dimen/ten" />
 </LinearLayout>

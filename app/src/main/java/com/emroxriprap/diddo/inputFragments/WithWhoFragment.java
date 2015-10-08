@@ -29,14 +29,11 @@ import com.emroxriprap.diddo.MainActivity;
 import com.emroxriprap.diddo.R;
 import com.emroxriprap.diddo.data.DidDoContract;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class DoWhatFragment extends Fragment implements
+public class WithWhoFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final int WHATS_LOADER = 2;
+    private static final int WITH_LOADER = 3;
     private SimpleCursorAdapter mAdapter;
     private ListView mList;
     private CoordinatorLayout mCoordinatorLayout;
@@ -48,17 +45,17 @@ public class DoWhatFragment extends Fragment implements
     private String mSelectedListVal;
     private Button.OnClickListener DialogCancelOnClickListener;
     private final String[] mDB_TABLE_NAMES = {
-            DidDoContract.Whats.COLUMN_WHAT_NAME
+            DidDoContract.Withs.COLUMN_WITH_NAME
     };
 
     // TODO: Rename and change types and number of parameters
-    public static DoWhatFragment newInstance(Bundle args) {
-        DoWhatFragment fragment = new DoWhatFragment();
+    public static WithWhoFragment newInstance(Bundle args) {
+        WithWhoFragment fragment = new WithWhoFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public DoWhatFragment() {
+    public WithWhoFragment() {
         // Required empty public constructor
     }
 
@@ -68,25 +65,25 @@ public class DoWhatFragment extends Fragment implements
         if (getArguments() != null) {
 
         }
-        getLoaderManager().initLoader(WHATS_LOADER,null,this);
+        getLoaderManager().initLoader(WITH_LOADER,null,this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_with_who, container, false);
+        mCoordinatorLayout = (CoordinatorLayout)rootView.findViewById(R.id.with_list_coord_layout);
 
-        View rootView = inflater.inflate(R.layout.fragment_do_what, container, false);
-        mCoordinatorLayout = (CoordinatorLayout)rootView.findViewById(R.id.what_list_coord_layout);
-
-        mList = (ListView)rootView.findViewById(R.id.lv_whats);
-        int [] listItemVIewIds = {R.id.tv_single_item_name};
+        mList = (ListView)rootView.findViewById(R.id.lv_with);
+        int [] listItemViewIds = {R.id.tv_single_item_name};
 
         mAdapter = new SimpleCursorAdapter(
                 getActivity(),
                 R.layout.list_item_single_tv,
                 null,
                 mDB_TABLE_NAMES,
-                listItemVIewIds,
+                listItemViewIds,
                 0
         );
         mList.setAdapter(mAdapter);
@@ -94,9 +91,9 @@ public class DoWhatFragment extends Fragment implements
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String selectedVal = mList.getItemAtPosition(position).toString();
-                Bundle args = new Bundle();
-                args.putString(MainActivity.ARGS_WHAT,selectedVal);
-                WithWhoFragment fragment = WithWhoFragment.newInstance(args);
+//                Bundle args = new Bundle();
+                getArguments().putString(MainActivity.ARGS_WITH,selectedVal);
+                OnFragment fragment = OnFragment.newInstance(getArguments());
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.container, fragment);
                 transaction.addToBackStack(null);
@@ -108,34 +105,32 @@ public class DoWhatFragment extends Fragment implements
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = getActivity().getContentResolver().query(
-                        DidDoContract.Whats.CONTENT_URI,
-                        new String[]{DidDoContract.Whats._ID,DidDoContract.Whats.COLUMN_WHAT_NAME},
+                        DidDoContract.Withs.CONTENT_URI,
+                        new String[]{DidDoContract.Withs._ID, DidDoContract.Withs.COLUMN_WITH_NAME},
                         null,
                         null,
                         null,
                         null
                 );
-                while(cursor.moveToNext()){
-                    String dbVal = cursor.getString(cursor.getColumnIndex(DidDoContract.Whats.COLUMN_WHAT_NAME));
-                    mSelectedListVal = ((TextView)view.findViewById(R.id.tv_single_item_name)).getText().toString();
-                    if (dbVal.trim().equalsIgnoreCase(mSelectedListVal)){
+                while (cursor.moveToNext()) {
+                    String dbVal = cursor.getString(cursor.getColumnIndex(DidDoContract.Withs.COLUMN_WITH_NAME));
+                    mSelectedListVal = ((TextView) view.findViewById(R.id.tv_single_item_name)).getText().toString();
+                    if (dbVal.trim().equalsIgnoreCase(mSelectedListVal)) {
                         //delete row
-                        String id = cursor.getString(cursor.getColumnIndex(DidDoContract.Whats._ID));
-//                        int i = cursor.getInt(cursor.getColumnIndex(DidDoContract.Whats._ID));
-//                        String id = cursor.getString(cursor.getColumnIndex(DidDoContract.Whats._ID));
+                        String id = cursor.getString(cursor.getColumnIndex(DidDoContract.Withs._ID));
 
                         getActivity().getContentResolver().delete(
-                                DidDoContract.Whats.CONTENT_URI,
+                                DidDoContract.Withs.CONTENT_URI,
                                 "_ID= ?",
                                 new String[]{id}
                         );
-                        Snackbar.make(mCoordinatorLayout, dbVal+" Deleted", Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
+                        Snackbar.make(mCoordinatorLayout, dbVal + " Deleted", Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 ContentValues values = new ContentValues();
-                                values.put(DidDoContract.Whats.COLUMN_WHAT_NAME, mSelectedListVal);
+                                values.put(DidDoContract.Withs.COLUMN_WITH_NAME, mSelectedListVal);
                                 getActivity().getContentResolver().insert(
-                                        DidDoContract.Whats.CONTENT_URI,
+                                        DidDoContract.Withs.CONTENT_URI,
                                         values
                                 );
                             }
@@ -147,46 +142,51 @@ public class DoWhatFragment extends Fragment implements
                 return true;
             }
         });
-        mFab = (FloatingActionButton)rootView.findViewById(R.id.fab_add_what);
+        mFab = (FloatingActionButton)rootView.findViewById(R.id.fab_add_with);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //go  to new fragment
                 //             addTestData();
                 //              insertIntoCal();
+//                DoWhatFragment fragment = new DoWhatFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.container, fragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
                 addDialog = showDialog();
                 addDialog.show();
 
             }
         });
         DialogAddOnClickListener = new Button.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 //check for duplicates then add to db
-                        String etValTrimmed = dialogNewEntry.getText().toString().trim();
+                String etValTrimmed = dialogNewEntry.getText().toString().trim();
                 if (etValTrimmed.length()>0){
                     boolean exists = false;
                     Cursor cursor = getActivity().getContentResolver().query(
-                            DidDoContract.Whats.CONTENT_URI,
+                            DidDoContract.Withs.CONTENT_URI,
                             null,
                             null,
                             null,
                             null
                     );
                     while(cursor.moveToNext()){
-                        String val = cursor.getString(cursor.getColumnIndex(DidDoContract.Whats.COLUMN_WHAT_NAME));
+                        String val = cursor.getString(cursor.getColumnIndex(DidDoContract.Withs.COLUMN_WITH_NAME));
                         if (val.trim().equalsIgnoreCase(etValTrimmed)){
-                            Toast.makeText(getActivity(),"Value already exists",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Value already exists", Toast.LENGTH_SHORT).show();
                             addDialog.dismiss();
                             exists = true;
                         }
                     }
                     if (exists == false){
                         ContentValues values = new ContentValues();
-                        values.put(DidDoContract.Whats.COLUMN_WHAT_NAME,etValTrimmed);
+                        values.put(DidDoContract.Withs.COLUMN_WITH_NAME,etValTrimmed);
 
                         Uri uri = getActivity().getContentResolver().insert(
-                             DidDoContract.Whats.CONTENT_URI,values);
+                                DidDoContract.Withs.CONTENT_URI,values);
                         addDialog.dismiss();
                     }
 
@@ -197,45 +197,31 @@ public class DoWhatFragment extends Fragment implements
             }
         };
         DialogCancelOnClickListener = new Button.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                       addDialog.dismiss();
-                    }
-                };
+            @Override
+            public void onClick(View v) {
+                addDialog.dismiss();
+            }
+        };
+
         return rootView;
     }
 
-private Dialog showDialog(){
-    Dialog dialog = new Dialog(getActivity());
-    dialog.setContentView(R.layout.dialog_add_single_value);
-    dialog.setTitle("Add a What");
-    dialogNewEntry = (EditText)dialog.findViewById(R.id.et_dialog_add_name);
-    dialogAdd = (Button)dialog.findViewById(R.id.b_dialog_add);
-    dialogCancel = (Button)dialog.findViewById(R.id.b_dialog_cancel);
-    dialogAdd.setOnClickListener(DialogAddOnClickListener);
-    dialogCancel.setOnClickListener(DialogCancelOnClickListener);
-    return dialog;
-}
-private void addTestData(){
-    List<String>verbs = new ArrayList<>();
-    verbs.add("Confirm");
-    verbs.add("Email");
-    verbs.add("Invoice");
-    verbs.add("Discuss");
-    Uri uri = null;
-    for (String s: verbs){
-        ContentValues values = new ContentValues();
-        values.put(DidDoContract.Whats.COLUMN_WHAT_NAME,s);
-        uri = getActivity().getContentResolver().insert(
-                DidDoContract.Whats.CONTENT_URI,values
-        );
+    private Dialog showDialog(){
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.dialog_add_single_value);
+        dialog.setTitle("Add a With");
+        dialogNewEntry = (EditText)dialog.findViewById(R.id.et_dialog_add_name);
+        dialogAdd = (Button)dialog.findViewById(R.id.b_dialog_add);
+        dialogCancel = (Button)dialog.findViewById(R.id.b_dialog_cancel);
+        dialogAdd.setOnClickListener(DialogAddOnClickListener);
+        dialogCancel.setOnClickListener(DialogCancelOnClickListener);
+        return dialog;
     }
-}
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         CursorLoader loader = new CursorLoader(
                 getActivity(),
-                DidDoContract.Whats.CONTENT_URI,
+                DidDoContract.Withs.CONTENT_URI,
                 null,
                 null,
                 null,
@@ -246,12 +232,13 @@ private void addTestData(){
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        ((SimpleCursorAdapter)mList.getAdapter()).swapCursor(data);
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        ((SimpleCursorAdapter)mList.getAdapter()).swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         ((SimpleCursorAdapter)mList.getAdapter()).swapCursor(null);
+
     }
 }
