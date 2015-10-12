@@ -40,9 +40,9 @@ public class LogsListFragment extends ListFragment implements
     private FloatingActionButton mFab;
 
     private final String [] mDB_TABLE_NAMES = {
-            DidDoContract.Logs.COLUMN_LOG_NAME,
+            DidDoContract.Logs.COLUMN_EVENT_TITLE,
             DidDoContract.Logs.COLUMN_DATE_STRING,
-            DidDoContract.Logs.COLUMN_DESCRIPTION
+            DidDoContract.Logs.COLUMN_ADDITIONAL_NOTES
     };
 
     public static LogsListFragment newInstance(Bundle bundle) {
@@ -186,11 +186,11 @@ private void addTestData(){
     Uri uri = null;
     int count = getListView().getCount();
     for (int i=count; i<count+10; i++){
-        values.put(DidDoContract.Logs.COLUMN_LOG_NAME,"Log " + i);
-        values.put(DidDoContract.Logs.COLUMN_DATE, 1234);
+        values.put(DidDoContract.Logs.COLUMN_EVENT_TITLE,"Log " + i);
+//        values.put(DidDoContract.Logs.COLUMN_DATE, 1234);
         values.put(DidDoContract.Logs.COLUMN_DATE_STRING, "09/"+i+"/2015");
-        values.put(DidDoContract.Logs.COLUMN_DESCRIPTION, "Do this "+i+ " times.");
-        values.put(DidDoContract.Logs.COLUMN_LOG_TYPE, 1);
+        values.put(DidDoContract.Logs.COLUMN_ADDITIONAL_NOTES, "Do this "+i+ " times.");
+//        values.put(DidDoContract.Logs.COLUMN_LOG_TYPE, 1);
         uri =getActivity().getContentResolver().insert(DidDoContract.Logs.CONTENT_URI,values);
     }
 //    if (uri != null){

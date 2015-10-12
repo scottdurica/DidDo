@@ -7,10 +7,16 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String ARGS_EVENT_TITLE = "event_title";
     public static final String ARGS_WHAT = "what";
     public static final String ARGS_WITH = "with";
     public static final String ARGS_DATE_STRING = "date_string";
-    public static final String ARGS_DATE_INT = "date_int";
+    public static final String ARGS_ALL_DAY_EVENT = "all_day_event";
+    public static final String ARGS_BEGIN_TIME_HOUR = "begin_time_hour";
+    public static final String ARGS_BEGIN_TIME_MINUTE = "begin_time_minute";
+    public static final String ARGS_END_TIME_HOUR = "end_time_hour";
+    public static final String ARGS_END_TIME_MINUTE = "end_time_minute";
+    public static final String ARGS_DESCRIPTION = "description";
 
 
     @Override

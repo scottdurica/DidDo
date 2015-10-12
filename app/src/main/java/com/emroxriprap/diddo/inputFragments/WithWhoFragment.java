@@ -15,6 +15,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,7 +40,7 @@ public class WithWhoFragment extends Fragment implements
     private SimpleCursorAdapter mAdapter;
     private ListView mList;
     private CoordinatorLayout mCoordinatorLayout;
-    private FloatingActionButton mFab;
+//    private FloatingActionButton mFab;
     private EditText dialogNewEntry;
     private Button dialogAdd, dialogCancel;
     private Button.OnClickListener DialogAddOnClickListener;
@@ -65,7 +68,8 @@ public class WithWhoFragment extends Fragment implements
         if (getArguments() != null) {
 
         }
-        getLoaderManager().initLoader(WITH_LOADER,null,this);
+        getLoaderManager().initLoader(WITH_LOADER, null, this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -90,7 +94,7 @@ public class WithWhoFragment extends Fragment implements
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String selectedVal = mList.getItemAtPosition(position).toString();
+                String selectedVal = ((TextView)view.findViewById(R.id.tv_single_item_name)).getText().toString();
 //                Bundle args = new Bundle();
                 getArguments().putString(MainActivity.ARGS_WITH,selectedVal);
                 OnFragment fragment = OnFragment.newInstance(getArguments());
@@ -142,23 +146,23 @@ public class WithWhoFragment extends Fragment implements
                 return true;
             }
         });
-        mFab = (FloatingActionButton)rootView.findViewById(R.id.fab_add_with);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //go  to new fragment
-                //             addTestData();
-                //              insertIntoCal();
-//                DoWhatFragment fragment = new DoWhatFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.container, fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-                addDialog = showDialog();
-                addDialog.show();
-
-            }
-        });
+//        mFab = (FloatingActionButton)rootView.findViewById(R.id.fab_add_with);
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //go  to new fragment
+//                //             addTestData();
+//                //              insertIntoCal();
+////                DoWhatFragment fragment = new DoWhatFragment();
+////                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+////                transaction.replace(R.id.container, fragment);
+////                transaction.addToBackStack(null);
+////                transaction.commit();
+//                addDialog = showDialog();
+//                addDialog.show();
+//
+//            }
+//        });
         DialogAddOnClickListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -205,7 +209,28 @@ public class WithWhoFragment extends Fragment implements
 
         return rootView;
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.do_what_or_with_menu, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_settings:{
+
+                return true;
+            }
+            case R.id.action_add: {
+                addDialog = showDialog();
+                addDialog.show();
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     private Dialog showDialog(){
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_add_single_value);

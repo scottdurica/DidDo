@@ -38,7 +38,7 @@
         android:layout_gravity="right|bottom"
         android:id="@+id/what_list_coord_layout">
 
-        <android.support.design.widget.FloatingActionButton
+ <!--       <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add_what"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             app:elevation="4dp"
             android:layout_gravity="right|bottom"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp" />   -->
     </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

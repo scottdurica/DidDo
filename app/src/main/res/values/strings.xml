@@ -9,4 +9,9 @@
     <string name="cb_all_day_event">All Day</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="until">Until...</string>
+    <string name="notes">Notes...</string>
+    <string name="add_button">Add Event</string>
+    <string name="action_add">Add</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>

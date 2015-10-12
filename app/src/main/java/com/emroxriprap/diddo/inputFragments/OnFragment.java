@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.emroxriprap.diddo.Utilities;
  */
 public class OnFragment extends Fragment {
 
+    public static int yearVal,monthVal,dayOfMonthVal;
 
     CalendarView calendar;
     FloatingActionButton fab;
@@ -45,7 +47,7 @@ public class OnFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_on, container, false);
@@ -55,11 +57,18 @@ public class OnFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
+
                 long d = calendar.getDate();
+
                 int dateInt = Utilities.dateToInt(d);
+                Log.d("long value ", "" + d);
+                Log.d("int value ", "" + dateInt);
+                Log.d("converted long value ", "" + Utilities.intToLong(dateInt));
                 String dateString = Utilities.dateToString(d);
-                getArguments().putString(MainActivity.ARGS_DATE_STRING,Utilities.dateToString(d));
-                getArguments().putInt(MainActivity.ARGS_DATE_INT,Utilities.dateToInt(d));
+                getArguments().putString(MainActivity.ARGS_DATE_STRING, Utilities.dateToString(d));
+//                getArguments().putInt(MainActivity.ARGS_DATE_INT,Utilities.dateToInt(d));
+  //              getArguments().putLong(MainActivity.ARGS_DATE_INT, d);
 
                 AtFragment fragment = AtFragment.newInstance(getArguments());
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

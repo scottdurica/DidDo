@@ -19,12 +19,16 @@ public class DidDoContract {
 
         public static final String LOGS_TABLE_NAME = "logs";
 
-        public static final String COLUMN_LOG_NAME = "name";
-        public static final String COLUMN_DESCRIPTION = "description";
-        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_EVENT_TITLE = "event_title";
+        public static final String COLUMN_WHAT = "what";
+        public static final String COLUMN_WITH = "with";
         public static final String COLUMN_DATE_STRING = "date_string";
-        public static final String COLUMN_LOG_TYPE = "log_type";
-
+        public static final String COLUMN_ALL_DAY_EVENT = "all_day_event";
+        public static final String COLUMN_BEGIN_TIME_HOUR = "begin_time_hour";
+        public static final String COLUMN_BEGIN_TIME_MINUTE = "begin_time_minute";
+        public static final String COLUMN_END_TIME_HOUR = "end_time_hour";
+        public static final String COLUMN_END_TIME_MINUTE = "end_time_minute";
+        public static final String COLUMN_ADDITIONAL_NOTES = "description";
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_LOGS).build();
 

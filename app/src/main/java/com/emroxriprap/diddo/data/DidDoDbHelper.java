@@ -18,12 +18,18 @@ public class DidDoDbHelper extends SQLiteOpenHelper {
     private static final String CREATE_LOGS_TABLE = "CREATE TABLE " + DidDoContract.Logs.LOGS_TABLE_NAME +
             " (" +
             DidDoContract.Logs._ID + " INTEGER PRIMARY KEY, " +
-            DidDoContract.Logs.COLUMN_LOG_NAME + " TEXT, " +
-            DidDoContract.Logs.COLUMN_DESCRIPTION + " TEXT, " +
-            DidDoContract.Logs.COLUMN_DATE + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_EVENT_TITLE + " TEXT, " +
+            DidDoContract.Logs.COLUMN_WHAT + " TEXT, " +
+            DidDoContract.Logs.COLUMN_WITH + " TEXT, " +
             DidDoContract.Logs.COLUMN_DATE_STRING + " TEXT, " +
-            DidDoContract.Logs.COLUMN_LOG_TYPE + " INTEGER"
+            DidDoContract.Logs.COLUMN_ALL_DAY_EVENT + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_BEGIN_TIME_HOUR + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_BEGIN_TIME_MINUTE + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_END_TIME_HOUR + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_END_TIME_MINUTE + " INTEGER, " +
+            DidDoContract.Logs.COLUMN_ADDITIONAL_NOTES + " TEXT "
             +")";
+
     private static final String CREATE_WHATS_TABLE = "CREATE TABLE " + DidDoContract.Whats.WHATS_TABLE_NAME +
             " (" +
             DidDoContract.Whats._ID + " INTEGER PRIMARY KEY, " +
